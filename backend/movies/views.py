@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
-from .services import search_movies, get_movie, get_person, get_top_rated, get_trending
+from .services import search_movies, get_movie, get_person, get_top_rated, get_trending, hard_reset_data, get_recommendations
 from .serializers import MovieListSerializer, MovieDetailSerializer, PersonDetailSerializer
 from rest_framework.response import Response
 
@@ -10,11 +9,11 @@ class SearchView(APIView):
 
     def get(self, request):
         query_data = request.query_params
-        query = query_data.get('query')
+        query = query_data.get('query') or query_data.get('q')
         if not query:
             return Response({'error': 'Query Required'}, status=400)
         page = int(query_data.get('page', 1))
-        filters = query_data.get('filters')
+        filters = query_data.get('filters') or {}
         data, _ = search_movies(query, page, filters)
         response = MovieListSerializer(data, many=True)
         return Response(response.data)
@@ -26,7 +25,11 @@ class MovieDetailView(APIView):
         movie = get_movie(tmdb_id)
         if not movie:
             return Response({'error': 'Movie not found'}, status=404)
-        response = MovieDetailSerializer(movie)
+        recommendations = get_recommendations(tmdb_id)
+        response = MovieDetailSerializer(movie, context={
+            'recommendations': recommendations,
+            'similar_movies': recommendations,
+        })
         return Response(response.data)
 
 class PersonDetailView(APIView):
@@ -57,3 +60,8 @@ class TrendingView(APIView):
         movies = get_trending()
         response = MovieListSerializer(movies, many=True)
         return Response(response.data)
+
+class ResetView(APIView):
+    def post(self, request):
+        hard_reset_data()
+        return Response({'message': 'Data has been reset'})

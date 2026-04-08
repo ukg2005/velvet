@@ -61,6 +61,8 @@ class MovieDetailSerializer(serializers.ModelSerializer):
     cast = serializers.SerializerMethodField()
     crew = serializers.SerializerMethodField()
     directors = serializers.SerializerMethodField()
+    recommendations = serializers.SerializerMethodField()
+    similar_movies = serializers.SerializerMethodField()
 
     def get_poster_url(self, obj):
         if not obj.poster_path:
@@ -92,9 +94,19 @@ class MovieDetailSerializer(serializers.ModelSerializer):
             return []
         return PersonListSerializer(directors, many=True).data
 
+    def get_recommendations(self, obj):
+        recommendations = self.context.get('recommendations', [])
+        return MovieListSerializer(recommendations, many=True).data
+
+    def get_similar_movies(self, obj):
+        similar_movies = self.context.get('similar_movies')
+        if similar_movies is None:
+            similar_movies = self.context.get('recommendations', [])
+        return MovieListSerializer(similar_movies, many=True).data
+
     class Meta:
         model = Movie
-        fields = ['id', 'tmdb_id', 'title', 'poster_url', 'backdrop_url', 'original_title', 'overview', 'tagline', 'year', 'release_date', 'runtime', 'original_language', 'rating', 'vote_count', 'genres', 'cast', 'crew', 'directors']
+        fields = ['id', 'tmdb_id', 'title', 'poster_url', 'backdrop_url', 'original_title', 'overview', 'tagline', 'year', 'release_date', 'runtime', 'original_language', 'rating', 'vote_count', 'genres', 'cast', 'crew', 'directors', 'recommendations', 'similar_movies']
 
 class PersonDetailSerializer(serializers.ModelSerializer):
     profile_url = serializers.SerializerMethodField()

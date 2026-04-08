@@ -69,11 +69,13 @@ class LoginVerifyView(APIView):
         return _auth_response(user)
 
 class MeView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     serializer_class = UserSerializer
 
     def get(self, request):
-        return Response(UserSerializer(request.user).data)
+        if request.user.is_authenticated:
+            return Response(UserSerializer(request.user).data)
+        return Response(None)
 
 def _auth_response(user):
     refresh = RefreshToken.for_user(user)

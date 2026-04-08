@@ -3,6 +3,8 @@ from django.conf import settings
 from .models import Movie, Genre, CastMembership, CrewMembership, Person
 from datetime import date, timedelta
 from django.utils import timezone
+from django.db import transaction
+from requests.exceptions import RequestException
 
 TMDB_BASE = 'https://api.themoviedb.org/3/'
 
@@ -18,16 +20,19 @@ def _parse_tmdb_date(value):
 def _safe_str(value):
     return value or ''
 
-def _get(endpoint, params={}):
+def _get(endpoint, params=None, timeout=5):
+    params = params or {}
     response = requests.get(
         f'{TMDB_BASE}{endpoint}',
-        params={'api_key': settings.TMDB_API_KEY, **params}
+        params={'api_key': settings.TMDB_API_KEY, **params},
+        timeout=timeout,
     )
     response.raise_for_status()
     return response.json()
 
-def search_movies(query, page=1, filters={}):
-    data = _get('search/movie', {'query': query, 'page': page, **filters})
+def search_movies(query, page=1, filters=None):
+    filters = filters or {}
+    data = _get('search/movie', {'query': query, 'page': page, **filters})      
     results = []
     for item in data['results']:
         movie, _ = Movie.objects.get_or_create(
@@ -59,7 +64,7 @@ def get_movie(tmdb_id):
         movie = None
     
     data = _get(f'movie/{tmdb_id}', {'append_to_response': 'credits'})
-    movie, _ = Movie.objects.get_or_create(
+    movie, _ = Movie.objects.update_or_create(
         tmdb_id=tmdb_id,
         defaults={
             "title": data["title"],
@@ -174,6 +179,20 @@ def get_watch_providers(tmdb_id, country='IN'):
     results = data.get('results', {})
     return results.get(country, {})
 
+def get_recommendations(tmdb_id, limit=6):
+    try:
+        data = _get(f'movie/{tmdb_id}/recommendations')
+    except RequestException:
+        return []
+    movies = _bulk_upsert(data.get('results', []))
+    return movies[:limit]
+
+
+def get_similar_movies(tmdb_id, limit=6):
+    """Backward-compatible alias; now uses TMDB recommendations."""
+    return get_recommendations(tmdb_id, limit=limit)
+
+@transaction.atomic
 def _bulk_upsert(items):
     movies = []
     for item in items:
@@ -190,3 +209,11 @@ def _bulk_upsert(items):
         )
         movies.append(movie)
     return movies
+
+@transaction.atomic
+def hard_reset_data():
+    Movie.objects.all().delete()
+    Genre.objects.all().delete()
+    CastMembership.objects.all().delete()
+    CrewMembership.objects.all().delete()
+    Person.objects.all().delete()

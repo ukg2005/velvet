@@ -6,5 +6,6 @@ urlpatterns = [
     path('<int:pk>/', views.LogUpdateView.as_view(), name='log_update'),
     path('liked/', views.LikedListView.as_view(), name='liked'),
     path('watchlist/', views.WatchlistView.as_view(), name='watchlist'),
+    path('toggle/', views.ToggleView.as_view(), name='toggle'),
     path('<int:pk>/toggle/', views.ToggleView.as_view(), name='toggle'),
 ]

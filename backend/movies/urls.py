@@ -8,4 +8,5 @@ urlpatterns = [
     path('person/<int:tmdb_id>/', views.PersonDetailView.as_view(), name='person_details'),
     path('top_rated/', views.TopRatedView.as_view(), name='top_rated'),
     path('trending/', views.TrendingView.as_view(), name='trending'),
+    path('reset/', views.ResetView.as_view(), name='reset'),
 ]

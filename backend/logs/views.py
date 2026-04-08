@@ -1,6 +1,6 @@
 from .serializers import LogSerializer
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import generics
 from movies.services import get_movie
 from rest_framework.response import Response
@@ -37,16 +37,20 @@ class LogUpdateView(generics.RetrieveUpdateDestroyAPIView):
 
 class LikedListView(generics.ListAPIView):
     serializer_class = MovieListSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Movie.objects.none()
         return Movie.objects.filter(liked__user=self.request.user)
 
 class WatchlistView(generics.ListAPIView):
     serializer_class = MovieListSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Movie.objects.none()
         return Movie.objects.filter(watchlist__user=self.request.user)
 
 class ToggleView(APIView):
