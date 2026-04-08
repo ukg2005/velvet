@@ -1,6 +1,6 @@
 # API Documentation
 
-## 🔐 Authentication & Users (`/api/auth/`)
+## Authentication & Users (`/api/auth/`)
 
 | Endpoint | Method | Auth Required | Description | Request Payload | Response |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -14,7 +14,7 @@
 
 ---
 
-## 🎬 Movies (`/api/movies/`)
+## Movies (`/api/movies/`)
 
 | Endpoint | Method | Auth Required | Description | Query Parameters | Response |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -26,7 +26,7 @@
 
 ---
 
-## 📝 Lists (`/api/lists/`)
+## Lists (`/api/lists/`)
 
 | Endpoint | Method | Auth Required | Description | Request Payload / Params | Response |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -38,7 +38,7 @@
 
 ---
 
-## 📔 Logs (`/api/logs/`)
+## Logs (`/api/logs/`)
 
 | Endpoint | Method | Auth Required | Description | Request Payload / Params | Response |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -51,7 +51,7 @@
 
 ---
 
-## 📊 Stats (`/api/stats/`)
+## Stats (`/api/stats/`)
 
 | Endpoint | Method | Auth Required | Description | Response Data |
 | :--- | :--- | :--- | :--- | :--- |
@@ -59,7 +59,7 @@
 
 ---
 
-## 📖 OpenAPI Auto-generated documentation (Swagger/ReDoc)
+## OpenAPI Auto-generated documentation (Swagger/ReDoc)
 
 The project also comes with auto-generated documentation via `drf-spectacular` out of the box.
 
