@@ -11,10 +11,12 @@ It documents:
 
 ## 1. Project in One Sentence
 
-Velvet is a Django REST API for movie discovery and personal tracking: users authenticate with OTP, browse TMDB-powered movie data, save movies to custom lists, log watched titles, and view aggregate stats.
+Velvet is a full-stack web application featuring a modern Next.js frontend and a Django REST API backend for movie discovery and personal tracking: users authenticate with OTP, browse TMDB-powered movie data, save movies to custom lists, log watched titles, and view aggregate stats.
 
 ## 2. Tech Stack and Why It Matters
 
+- Next.js + React + Tailwind CSS:
+  - Frontend framework and styling
 - Django 6 + Django REST Framework:
   - Backend framework + API tooling
 - SimpleJWT:
@@ -268,15 +270,16 @@ Movie/person sync uses freshness windows (30 days) to reduce API calls while kee
 
 ## 8. What You Have Achieved (Portfolio View)
 
-You built a complete backend with:
-- custom user auth flow,
+You built a complete full-stack application with:
+- a modern React (Next.js) frontend,
+- a custom user auth flow,
 - external API integration,
 - personal collection and logging features,
-- analytics endpoint,
+- an analytics endpoint,
 - generated schema/docs,
 - modular app architecture.
 
-This is already a solid multi-domain backend project.
+This is a comprehensive, production-ready full-stack portfolio project.
 
 ## 9. Known Gaps and Risks (Current State)
 

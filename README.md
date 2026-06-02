@@ -1,136 +1,62 @@
-# Movies App
+# Velvet
 
-A Django REST Framework application that manages movie data, including films, genres, cast, and crew information with TMDB API integration.
-
-## Overview
-
-The **movies** app provides a complete movie management solution with the following features:
-
-- **Movie Database:** Store and manage movie metadata (title, release date, ratings, etc.)
-- **TMDB Integration:** Sync data with The Movie Database (TMDB) API for comprehensive movie information
-- **Cast & Crew Management:** Track actors and crew members with their roles and relationships to movies
-- **Advanced Search:** Search movies by query with pagination support
-- **Smart Caching:** Automatically cache movie data for 30 days to reduce API calls
-- **Recommendations:** Fetch recommended and similar movies
-- **Genre Classification:** Organize movies by genre
-
-## Quick Start
-
-### Installation
-
-1. Ensure the app is installed in your Django project:
-   ```python
-   # settings.py
-   INSTALLED_APPS = [
-       ...
-       'movies',
-   ]
-   ```
-
-2. Set up TMDB API key:
-   ```python
-   # settings.py
-   TMDB_API_KEY = 'your_api_key_here'
-   ```
-
-3. Run migrations:
-   ```bash
-   python manage.py migrate
-   ```
-
-### Basic Usage
-
-```bash
-# Search for movies
-GET /api/movies/search/?query=fight%20club
-
-# Get movie details
-GET /api/movies/movie/550/
-
-# Get trending movies
-GET /api/movies/trending/
-
-# Get top-rated movies
-GET /api/movies/top_rated/
-```
+Velvet is a full-stack movie tracking application featuring a modern Next.js frontend and a robust Django REST Framework backend. It allows users to manage movie data, log films, track watchlists, and view statistics.
 
 ## Directory Structure
 
 ```
-movies/
-├── __init__.py
-├── admin.py              # Django admin configuration
-├── apps.py               # App configuration
-├── models.py             # Database models (Movie, Genre, Person, etc.)
-├── serializers.py        # DRF serializers for API responses
-├── services.py           # Business logic and TMDB API integration
-├── tests.py              # Unit tests
-├── urls.py               # URL routing
-├── views.py              # API view handlers
-└── migrations/           # Database migrations
+velvet/
+├── backend/              # Django REST Framework backend
+│   ├── movies/           # Main Django app for movie logic
+│   ├── velvet/           # Django project settings
+│   ├── manage.py         # Django CLI
+│   └── requirements.txt  # Python dependencies
+└── frontend/             # Next.js React frontend
+    ├── app/              # Next.js App Router pages
+    ├── components/       # Reusable React components
+    ├── lib/              # Utility functions and API services
+    └── package.json      # Node.js dependencies
 ```
 
-## API Endpoints
+## Running the Application
 
-All endpoints are prefixed with `/api/movies/`.
+Both the frontend and backend need to be running simultaneously for the application to work.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/search/` | Search movies by query |
-| GET | `/movie/<tmdb_id>/` | Get full movie details |
-| GET | `/person/<tmdb_id>/` | Get person details and filmography |
-| GET | `/top_rated/` | Get top-rated movies |
-| GET | `/trending/` | Get currently trending movies |
-| POST | `/reset/` | Reset all movie data |
+### 1. Backend (Django)
 
-For detailed API documentation, see [API.md](API.md).
-
-## Data Models
-
-The app manages the following entities:
-
-- **Movie:** Film metadata and relationships
-- **Genre:** Movie categories
-- **Person:** Actors and crew members
-- **CastMembership:** Relationship between movies and cast
-- **CrewMembership:** Relationship between movies and crew
-
-For detailed model documentation, see [IMPLEMENTATION.md](IMPLEMENTATION.md).
-
-## Configuration
-
-### Required Settings
-
-```python
-TMDB_API_KEY = 'your_tmdb_api_key_here'
-```
-
-Get an API key from: https://www.themoviedb.org/settings/api
-
-### Image URLs
-
-Images are served through TMDB CDN:
-- Base: `https://image.tmdb.org/t/p`
-- Common sizes: `w185`, `w342`, `w500`, `w1200`
-
-For implementation details, see [IMPLEMENTATION.md](IMPLEMENTATION.md).
-
-## Testing
+Open a terminal, navigate to the backend directory, and start the development server:
 
 ```bash
-python manage.py test movies
+cd backend
+python manage.py runserver
 ```
+
+The backend API will be available at `http://localhost:8000`.
+
+### 2. Frontend (Next.js)
+
+Open a second terminal, navigate to the frontend directory, and start the development server:
+
+```bash
+cd frontend
+npm run dev
+```
+
+The frontend application will be available at `http://localhost:3000`.
 
 ## Key Features
 
 ✅ **TMDB Sync** - Automatic data synchronization with The Movie Database
-✅ **Caching** - Smart 30-day caching to minimize API calls
+✅ **Caching** - Smart caching to minimize API calls and ensure snappy UI performance
 ✅ **Rich Data** - Complete movie information including cast, crew, and genres
-✅ **Search** - Full-text search with pagination
-✅ **Recommendations** - Get similar and recommended movies
-✅ **Flexible Queries** - RESTful API with clean endpoints
+✅ **Search** - Full-text search for movies and actors
+✅ **Recommendations** - Get similar and recommended movies based on your logs
+✅ **Watchlist & Logs** - Track your viewing history and maintain watchlists
+✅ **Stats** - Beautiful, dynamic charts illustrating your viewing habits
 
 ## Documentation
 
 - [API_DOCUMENTATION.md](API_DOCUMENTATION.md) - Complete API endpoint documentation
 - [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation details, models, and services
+- [PROJECT_LEARNING_GUIDE.md](PROJECT_LEARNING_GUIDE.md) - Guide for developers learning the codebase
+- [PROJECT_REVISION_NOTES.md](PROJECT_REVISION_NOTES.md) - Historical revision notes

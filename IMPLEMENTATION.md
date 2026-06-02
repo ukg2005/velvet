@@ -1,4 +1,4 @@
-# Movies App - Implementation Details
+# Velvet Backend - Implementation Details
 
 ## Database Models
 

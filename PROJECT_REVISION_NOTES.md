@@ -2,13 +2,15 @@
 
 ## 1. Project Snapshot
 
-- Backend-only Django REST API project
+- Full-stack web application (Next.js frontend + Django REST API)
 - Main goal: movie discovery + personal movie tracking
 - External data source: TMDB API
 - Auth style: OTP + JWT
 
 ## 2. Stack (Remember These)
 
+- Next.js (App Router)
+- Tailwind CSS
 - Django 6
 - Django REST Framework
 - SimpleJWT (access + refresh)
@@ -104,4 +106,4 @@ Log flow:
 
 ## 10. Fast Oral Explanation (30 seconds)
 
-"I built a Django REST backend with five modular apps: users, movies, lists, logs, and stats. Users authenticate via OTP and receive JWT tokens. Movie data is integrated from TMDB through a dedicated service layer with caching and sync rules. Users can build lists, log watched movies, and manage liked/watchlist states. A stats endpoint computes analytics from logs using ORM aggregation. The architecture emphasizes modular apps, serializers, permissions, and through-model relationships."
+"I built a full-stack movie application with a Next.js frontend and a modular Django REST backend. Users authenticate via OTP and receive JWT tokens. Movie data is integrated from TMDB through a dedicated service layer with caching and sync rules. Users can build lists, log watched movies, and manage liked/watchlist states. A stats endpoint computes analytics from logs using ORM aggregation. The architecture emphasizes modular apps, serializers, permissions, and through-model relationships on the backend, alongside a beautifully styled, dynamic React frontend."
