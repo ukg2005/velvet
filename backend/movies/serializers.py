@@ -118,4 +118,4 @@ class PersonDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = ['id', 'tmdb_id', 'name', 'profile_url', 'date_of_birth', 'place_of_birth', 'bio']
+        fields = ['id', 'tmdb_id', 'name', 'known_for_department', 'profile_url', 'date_of_birth', 'place_of_birth', 'bio']

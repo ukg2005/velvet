@@ -11,6 +11,7 @@ class Genre(models.Model):
 class Person(models.Model):
     tmdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
+    known_for_department = models.CharField(max_length=100, blank=True)
     profile_path = models.CharField(max_length=200, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     place_of_birth = models.CharField(max_length=200, blank=True)

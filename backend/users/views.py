@@ -43,13 +43,26 @@ class VerifyEmailView(APIView):
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
-    serializer_class = LoginSerializer
 
     def post(self, request):
-        serializer = LoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        validated_data = cast(dict[str, Any], serializer.validated_data)
-        user = cast(User, validated_data["user"])
+        email = request.data.get("email", "").lower()
+        if not email:
+            return Response({"detail": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            import re
+            base_username = re.sub(r'[^a-zA-Z0-9_]', '', email.split('@')[0])
+            if not base_username:
+                base_username = "user"
+            username = base_username
+            counter = 1
+            while User.objects.filter(username=username).exists():
+                username = f"{base_username}{counter}"
+                counter += 1
+            user = User.objects.create_user(email=email, username=username)
+
         _send_otp(user)
         return Response({"detail": "OTP sent to your email"})
 
@@ -76,6 +89,14 @@ class MeView(APIView):
         if request.user.is_authenticated:
             return Response(UserSerializer(request.user).data)
         return Response(None)
+
+    def patch(self, request):
+        if not request.user.is_authenticated:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 def _auth_response(user):
     refresh = RefreshToken.for_user(user)

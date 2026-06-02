@@ -14,7 +14,7 @@ class ListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return List.objects.filter(Q(user=self.request.user) | Q(is_public=True)).distinct().prefetch_related('listentry_set__movie')
+        return List.objects.filter(Q(user=self.request.user) | Q(is_public=True)).distinct().prefetch_related('entries__movie')
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -30,14 +30,14 @@ class ListDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ListSerializer
 
     def get_queryset(self):
-        return List.objects.filter(Q(user=self.request.user) | Q(is_public=True)).distinct().prefetch_related('listentry_set__movie')
+        return List.objects.filter(Q(user=self.request.user) | Q(is_public=True)).distinct().prefetch_related('entries__movie')
 
 class AddMovieToListView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ListSerializer
 
-    def post(self, request):
-        list_id = request.data.get('list_id')
+    def post(self, request, pk):
+        list_id = pk
         tmdb_id = request.data.get('tmdb_id')
         list = List.objects.filter(pk=list_id, user=request.user).first()
         if not list:
@@ -51,21 +51,21 @@ class AddMovieToListView(APIView):
         if created:
             entry.order=ListEntry.objects.filter(list=list).count()
             entry.save()
-            return Response({'success': 'Movie Successfully added to List'}, status=201)
-        return Response({'warning': 'Movie already exists in the list'}, status=200)
+            return Response({'success': 'Movie Successfully added to List', 'entry_id': entry.id}, status=201)
+        return Response({'warning': 'Movie already exists in the list', 'entry_id': entry.id}, status=200)
 
 class ListReorderView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ListSerializer
 
-    def post(self, request, list_id):
-        list = List.objects.filter(pk=list_id, user=request.user).first()
+    def post(self, request, pk):
+        list = List.objects.filter(pk=pk, user=request.user).first()
         if not list:
             return Response({'error': 'List  not found or unauthorized.'}, status=404)
         
         incoming_ids = [item['id'] for item in request.data]
         valid_entries = ListEntry.objects.filter(
-            list_id=list_id,
+            list_id=pk,
             id__in=incoming_ids
         )
         if valid_entries.count() != len(incoming_ids):

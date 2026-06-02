@@ -23,7 +23,7 @@ class LogCreateView(generics.ListCreateAPIView):
         serializer.save(user=self.request.user, movie=movie)
     
     def get_queryset(self):
-        return Log.objects.filter(user=self.request.user)
+        return Log.objects.filter(user=self.request.user).select_related('movie').order_by('-id')
 
 class LogUpdateView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LogSerializer
@@ -33,7 +33,7 @@ class LogUpdateView(generics.RetrieveUpdateDestroyAPIView):
         serializer.save()
     
     def get_queryset(self):
-        return Log.objects.filter(user=self.request.user)
+        return Log.objects.filter(user=self.request.user).select_related('movie')
 
 class LikedListView(generics.ListAPIView):
     serializer_class = MovieListSerializer
@@ -72,5 +72,6 @@ class ToggleView(APIView):
         obj, created = model.objects.get_or_create(user=request.user, movie=movie)
         if not created:
             obj.delete()
-            return Response({'success': f'Removed from {action}'}, status=200)
-        return Response({'success': f'Added to {action}'}, status=200)
+            # Return explicit boolean so frontend can reliably know current state
+            return Response({'liked': False, 'watchlist': False, action: False, 'added': False}, status=200)
+        return Response({'liked': action == 'liked', 'watchlist': action == 'watchlist', action: True, 'added': True}, status=200)

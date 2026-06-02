@@ -1,0 +1,13 @@
+{
+  "name": "velvet-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix velvet-frontend-39 run dev",
+    "build": "npm --prefix velvet-frontend-39 run build",
+    "start": "npm --prefix velvet-frontend-39 run start",
+    "lint": "npm --prefix velvet-frontend-39 run lint"
+  },
+  "dependencies": {
+    "is-retry-allowed": "^3.0.0"
+  }
+}
