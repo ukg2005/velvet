@@ -41,7 +41,7 @@ export const SimilarMovies = memo(function SimilarMovies({ movies }: SimilarMovi
             <Link
               key={movie.id}
               href={`/movie?id=${movie.id}`}
-              prefetch={false}
+             
               className="group cursor-pointer"
             >
               <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-muted ring-2 ring-primary/30 transition-all group-hover:ring-primary">

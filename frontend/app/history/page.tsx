@@ -63,7 +63,7 @@ export default function HistoryPage() {
               const year = date ? date.getFullYear() : '';
 
               return (
-                <Link key={log.id || index} href={`/movie?id=${log.movie.tmdb_id}`} prefetch={false} className="group block">
+                <Link key={log.id || index} href={`/movie?id=${log.movie.tmdb_id}`} className="group block">
                   <div className="flex items-center gap-4 rounded-xl border border-border/50 bg-card p-3 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:bg-primary/5">
                     
                     {/* Date Block */}

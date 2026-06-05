@@ -3,7 +3,8 @@
 import React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Film, Star, User, Settings, BarChart2, Search, Heart, Loader2, Pencil, Plus, X, Trash2, MapPin, CalendarDays } from "lucide-react"
+import { Film, Star, User, Settings, BarChart2, Search, Heart, Loader2, Pencil, Plus, X, Trash2, MapPin, CalendarDays, LogOut } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -53,6 +54,7 @@ const FAVORITE_LIMIT = 4
 const FAVORITES_STORAGE_KEY = "profile_favorites_v1"
 
 export default function ProfilePage() {
+  const router = useRouter()
   const { isAuthenticated } = useAuth()
   const [favorites, setFavorites] = React.useState<ProfileMovie[]>([])
   const [recentMovies, setRecentMovies] = React.useState<any[]>([])
@@ -249,6 +251,12 @@ export default function ProfilePage() {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+    router.push("/")
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto max-w-5xl space-y-16 px-4 py-12">
@@ -351,11 +359,16 @@ export default function ProfilePage() {
               </Button>
 
               <Button variant="secondary" size="sm" asChild className="rounded-full bg-secondary/50 text-secondary-foreground hover:bg-primary/20 hover:text-primary hover:shadow-[0_0_15px_rgba(34,197,94,0.2)] hover:border-primary/30 transition-all border border-transparent">
-                <Link href="/watchlist" prefetch={false}>Watchlist</Link>
+                <Link href="/watchlist">Watchlist</Link>
               </Button>
 
               <Button variant="secondary" size="sm" asChild className="rounded-full bg-secondary/50 text-secondary-foreground hover:bg-primary/20 hover:text-primary hover:shadow-[0_0_15px_rgba(34,197,94,0.2)] hover:border-primary/30 transition-all border border-transparent">
-                <Link href="/history" prefetch={false}>History (All)</Link>
+                <Link href="/history">History (All)</Link>
+              </Button>
+
+              <Button variant="outline" size="sm" onClick={handleLogout} className="rounded-full hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30 transition-all">
+                <LogOut className="mr-2 size-4" />
+                Logout
               </Button>
             </div>
           </div>
@@ -411,7 +424,7 @@ export default function ProfilePage() {
 
                     return (
                       <div key={`fav-search-${movie.tmdb_id}`} className="rounded-lg border border-border p-2">
-                        <Link href={`/movie?id=${movie.tmdb_id}`} prefetch={false} className="block">
+                        <Link href={`/movie?id=${movie.tmdb_id}`} className="block">
                           <div className="relative aspect-2/3 w-full overflow-hidden rounded-lg bg-muted">
                             <Image
                               src={movie.poster}
@@ -465,7 +478,7 @@ export default function ProfilePage() {
                         <X className="size-4" />
                       </Button>
                     )}
-                    <Link href={`/movie?id=${movie.tmdb_id}`} prefetch={false} className="block">
+                    <Link href={`/movie?id=${movie.tmdb_id}`} className="block">
                       <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-muted shadow-md ring-1 ring-white/5 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-primary/10 group-hover:ring-primary/40">
                         <Image
                           src={movie.poster}
@@ -507,7 +520,7 @@ export default function ProfilePage() {
         <section>
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight">Recent Activity</h2>
-            <Link href="/history" prefetch={false} className="text-sm font-medium text-green-600 transition-colors hover:text-green-500">
+            <Link href="/history" className="text-sm font-medium text-green-600 transition-colors hover:text-green-500">
               View all
             </Link>
           </div>
@@ -532,7 +545,7 @@ export default function ProfilePage() {
                 const day = date ? date.getDate() : '-';
 
                 return (
-                  <Link key={i} href={`/movie?id=${movie.id}`} prefetch={false} className="group block">
+                  <Link key={i} href={`/movie?id=${movie.id}`} className="group block">
                     <div className="flex items-center gap-4 rounded-xl border border-border/50 bg-card p-3 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:bg-primary/5">
                       
                       {/* Date Block */}
@@ -580,7 +593,7 @@ export default function ProfilePage() {
         <section>
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight">Public Lists</h2>
-            <Link href="/lists" prefetch={false} className="text-sm font-medium text-green-600 transition-colors hover:text-green-500">
+            <Link href="/lists" className="text-sm font-medium text-green-600 transition-colors hover:text-green-500">
               All Lists
             </Link>
           </div>
@@ -609,7 +622,7 @@ export default function ProfilePage() {
                 <Link
                   key={list.id}
                   href={`/lists/${list.id}`}
-                  prefetch={false}
+                 
                   className="group flex flex-col rounded-xl border border-border/50 bg-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 dark:hover:border-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   <div className="grid aspect-[16/9] w-full grid-cols-2 grid-rows-2 gap-0.5 overflow-hidden bg-muted">

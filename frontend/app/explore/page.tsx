@@ -142,7 +142,7 @@ export default function ExplorePage() {
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {movies.map((movie: any) => (
               <div key={movie.tmdb_id || movie.id} className="group relative">
-                <Link href={`/movie?id=${movie.tmdb_id || movie.id}`} prefetch={false} className="block">
+                <Link href={`/movie?id=${movie.tmdb_id || movie.id}`} className="block">
                   <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-muted shadow-md ring-1 ring-white/5 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-primary/10 group-hover:ring-primary/40">
                     <Image
                       src={getImageUrl(movie.poster_url || movie.poster_path, "w500")}

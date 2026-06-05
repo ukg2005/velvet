@@ -88,7 +88,7 @@ export function CastCrewSection({ cast, crew }: CastCrewSectionProps) {
           ? cast.map((member, index) => (
               <Link
                 href={getPersonHref(member)}
-                prefetch={false}
+               
                 key={`${member.id}-${member.character}-${index}`}
                 className="group block rounded-lg bg-secondary/50 p-3 ring-1 ring-border transition-all hover:bg-secondary hover:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               >
@@ -103,7 +103,7 @@ export function CastCrewSection({ cast, crew }: CastCrewSectionProps) {
           : crew.map((member, index) => (
               <Link
                 href={getPersonHref(member)}
-                prefetch={false}
+               
                 key={`${member.id}-${member.job}-${index}`}
                 className="group block rounded-lg bg-secondary/50 p-3 ring-1 ring-border transition-all hover:bg-secondary hover:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               >
