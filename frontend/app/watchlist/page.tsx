@@ -171,7 +171,7 @@ export default function WatchlistPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto max-w-6xl px-4 py-12 space-y-14">
         {/* Page Header */}
         <header>

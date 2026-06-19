@@ -450,6 +450,7 @@ function MovieProfileContent() {
         omdbRatings={movieData.omdbRatings}
         vote_count={movieData.vote_count}
         original_language={movieData.original_language}
+        tagline={movieData.tagline}
         isLogged={isLogged}
         userRating={userRating}
         onLogMovie={() => setLogMovieOpen(true)}

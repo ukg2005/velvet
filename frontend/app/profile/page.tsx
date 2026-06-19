@@ -258,7 +258,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto max-w-5xl space-y-16 px-4 py-12">
 
         {/* Profile Header */}

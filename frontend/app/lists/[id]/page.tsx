@@ -237,7 +237,7 @@ export default function ListDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
         <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6">
           <div>

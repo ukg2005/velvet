@@ -126,7 +126,7 @@ export default function ListsHubPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <header className="mb-10 border-b pb-6 flex items-end justify-between">
           <div>

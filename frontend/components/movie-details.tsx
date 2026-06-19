@@ -47,12 +47,12 @@ export function MovieDetails({
   }
 
   return (
-    <section className="mt-8 space-y-6 md:mt-12">
+    <section className="mt-4 space-y-6 md:mt-6">
       <div className="max-w-3xl">
         {tagline && (
-          <p className="text-lg italic text-muted-foreground">{`"${tagline}"`}</p>
+          <p className="text-base italic text-muted-foreground mb-4">"{tagline}"</p>
         )}
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Overview</h2>
+        <h2 className="text-xl font-semibold text-foreground">Overview</h2>
         <p className="mt-2 leading-relaxed text-muted-foreground">{overview}</p>
       </div>
 

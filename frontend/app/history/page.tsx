@@ -30,7 +30,7 @@ export default function HistoryPage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto max-w-5xl px-4 py-12">
         <div className="mb-8 flex items-center gap-4">
           <Link href="/profile" className="flex size-10 items-center justify-center rounded-full bg-secondary text-secondary-foreground hover:bg-primary/20 hover:text-primary transition-all">

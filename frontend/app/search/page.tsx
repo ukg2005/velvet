@@ -106,7 +106,7 @@ function SearchResults() {
   const hasResults = movies.length > 0 || people.length > 0
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background pt-16">
       <div className="container mx-auto px-4 py-10">
         <div className="mb-8 border-b pb-6">
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground">
