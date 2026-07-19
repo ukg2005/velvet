@@ -13,6 +13,7 @@ class Log(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(5)]
     )
     review = models.TextField(blank=True)
+    is_rewatch = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} logged {self.movie.title}'

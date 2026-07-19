@@ -2,10 +2,10 @@
   "name": "velvet-monorepo",
   "private": true,
   "scripts": {
-    "dev": "npm --prefix velvet-frontend-39 run dev",
-    "build": "npm --prefix velvet-frontend-39 run build",
-    "start": "npm --prefix velvet-frontend-39 run start",
-    "lint": "npm --prefix velvet-frontend-39 run lint"
+    "dev": "npm --prefix frontend-svelte run dev",
+    "build": "npm --prefix frontend-svelte run build",
+    "start": "npm --prefix frontend-svelte run start",
+    "lint": "npm --prefix frontend-svelte run check"
   },
   "dependencies": {
     "is-retry-allowed": "^3.0.0"

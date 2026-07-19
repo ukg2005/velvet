@@ -77,7 +77,8 @@ class LoginVerifyView(APIView):
         user = cast(User, validated_data["user"])
         otp = cast(OTP, validated_data["otp"])
         if not user.is_active:
-            return Response({"detail": "Account not verified"}, status=status.HTTP_400_BAD_REQUEST)
+            user.is_active = True
+            user.save(update_fields=["is_active"])
         otp.delete()
         return _auth_response(user)
 

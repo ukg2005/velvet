@@ -1,5 +1,10 @@
 # Environment variables
 backend/.env
+frontend-svelte/.env
+frontend-svelte/.env.*
+!frontend-svelte/.env.example
+frontend/.env
+frontend/.env.*
 
 # Python bytecode and cache
 __pycache__/
@@ -13,7 +18,6 @@ env/
 ENV/
 
 # Distribution / packaging
-build/
 dist/
 *.egg-info/
 .eggs/
@@ -36,7 +40,7 @@ backend/db.sqlite3
 backend/staticfiles/
 backend/media/
 
-# Logs and local runtime files
+# Logs
 *.log
 *.pid
 
@@ -45,9 +49,23 @@ backend/media/
 .idea/
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Node.js & Next.js
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js (legacy frontend)
 .next/
 out/
 build/
+
+# SvelteKit
+.svelte-kit/
+.vercel/
+
+# React
+frontend/

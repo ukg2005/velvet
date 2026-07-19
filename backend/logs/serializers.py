@@ -15,7 +15,7 @@ class LogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Log
-        fields = ['tmdb_id', 'logged_at', 'rating', 'review', 'is_liked', 'on_watchlist', 'movie']
+        fields = ['id', 'tmdb_id', 'logged_at', 'rating', 'review', 'is_rewatch', 'is_liked', 'on_watchlist', 'movie']
     
     def create(self, data):
         tmdb_id = data.pop('tmdb_id')
